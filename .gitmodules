@@ -1,0 +1,6 @@
+[submodule "themes/sphinx-neon-synth-theme"]
+	path = themes/sphinx-neon-synth-theme
+	url = git@github.com:nutsloop/sphinx-neon-synth-theme.git
+[submodule "themes/sphinx-neon-wave-theme"]
+	path = themes/sphinx-neon-wave-theme
+	url = git@github.com:nutsloop/sphinx-neon-wave-theme.git

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title>Neonbook logo</title>
+  <desc>Monogram NB in a rounded square</desc>
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="#0b0f1a" stroke="#00f5ff" stroke-width="2"/>
+  <text x="32" y="39" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#00f5ff" letter-spacing="1">NB</text>
+</svg>

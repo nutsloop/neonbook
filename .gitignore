@@ -1,0 +1,12 @@
+/.cache/
+/.claude/
+/.idea/
+/.zed/
+/build/
+/public/
+/.venv/
+/source/ai-conversations/*
+!/source/ai-conversations/index.md
+/source/benchmarks/*
+!/source/benchmarks/index.md
+__pycache__/

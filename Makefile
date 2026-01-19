@@ -1,6 +1,6 @@
 PYTHON ?= python3
 SPHINXBUILD ?= $(PYTHON) -m sphinx
-SPHINXOPTS ?=
+SPHINXOPTS ?= -q
 SOURCEDIR ?= source
 BUILDDIR ?= build
 THEME ?= neon-synth

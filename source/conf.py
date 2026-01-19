@@ -7,10 +7,11 @@ from pathlib import Path
 # Add themes to path for local development
 theme_root = Path(__file__).parent.parent / "themes"
 theme_map = {
-    "neon-synth": ("sphinx_neon_synth_theme", theme_root / "sphinx-neon-synth-theme"),
-    "neon-wave": ("sphinx_neon_wave_theme", theme_root / "sphinx-neon-wave-theme"),
+    "neon-synth": ("neon-synth", "neon_synth", theme_root / "neon-synth"),
+    "neon-wave": ("neon-wave", "neon_wave", theme_root / "neon-wave"),
+    "neon-static": ("neon-static", "neon_static", theme_root / "neon-static"),
 }
-theme_paths = [path for _, path in theme_map.values()]
+theme_paths = [path / "src" for _, _, path in theme_map.values()]
 for path in theme_paths:
     sys.path.insert(0, str(path))
 
@@ -30,19 +31,19 @@ extensions = [
     "sphinx_design",
 ]
 
-# Theme selection via env var (NEONBOOK_THEME=neon-synth|neon-wave)
+# Theme selection via env var (NEONBOOK_THEME=neon-synth|neon-wave|neon-static)
 theme_key = os.environ.get("NEONBOOK_THEME", "neon-synth").strip().lower()
 theme_entry = theme_map.get(theme_key)
 if theme_entry is None:
-    for _, (theme_name, theme_path) in theme_map.items():
-        if theme_key == theme_name:
-            theme_entry = (theme_name, theme_path)
+    for _, (theme_name, theme_module, theme_path) in theme_map.items():
+        if theme_key in {theme_name, theme_module}:
+            theme_entry = (theme_name, theme_module, theme_path)
             break
 if theme_entry is None:
     theme_entry = theme_map["neon-synth"]
 
-html_theme, _selected_theme_path = theme_entry
-html_theme_path = [str(path) for path in theme_paths]
+html_theme, theme_module, _selected_theme_path = theme_entry
+extensions.append(theme_module)
 
 def _env_flag(name: str, default: str = "on") -> bool:
     value = os.environ.get(name, default).strip().lower()

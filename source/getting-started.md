@@ -18,10 +18,6 @@ NeonSignal is a **monolithic repository** containing multiple related projects m
 - `www/simonedelpopolo/` - Personal blog with AI-powered content generation
 - `www/_default/` - Fallback static site used by benchmarks and unknown hosts
 
-**Documentation & Theming:**
-- `www/book/` - Sphinx technical documentation
-- `themes/sphinx-neon-synth-theme/` - Custom neon-synth documentation theme
-
 **Infrastructure:**
 - `scripts/` - Build automation, certificates, deployments, and benchmarks
 - `systemd/` - Service unit files for production

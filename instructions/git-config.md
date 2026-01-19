@@ -5,10 +5,11 @@
 ### neonbook
 git@github.com:nutsloop/neonbook.git
 
-### sphinx-neon-synth-theme (submodule)
-git@github.com:nutsloop/sphinx-neon-synth-theme.git
+### neon-synth (submodule)
+git@github.com:nutsloop/neon-synth.git
 
-### sphinx-neon-wave-theme (submodule)
-git@github.com:nutsloop/sphinx-neon-wave-theme.git
+### neon-wave (submodule)
+git@github.com:nutsloop/neon-wave.git
 
-
+### neon-static (submodule)
+git@github.com:nutsloop/neon-static.git

@@ -14,7 +14,7 @@ NeonBook is the official documentation built with Sphinx, featuring custom neon-
 
 ## Themes
 
-This repository includes three custom Sphinx themes as git submodules:
+NeonBook uses three custom Sphinx themes published on PyPI:
 
 - [neon-synth](https://github.com/nutsloop/neon-synth)
 - [neon-wave](https://github.com/nutsloop/neon-wave)
@@ -23,7 +23,10 @@ This repository includes three custom Sphinx themes as git submodules:
 ## Build
 
 ```bash
-# Setup virtual environment and install dependencies
+# Install dependencies (including the PyPI themes)
+pip install -r requirements.txt
+
+# Build the docs
 make html THEME=neon-synth
 
 # Or with neon-wave theme

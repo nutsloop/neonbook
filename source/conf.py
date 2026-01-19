@@ -4,16 +4,30 @@ import os
 import sys
 from pathlib import Path
 
-# Add themes to path for local development
+# Theme packages are expected to be installed from PyPI.
+# Fall back to local theme checkouts under themes/ when present.
 theme_root = Path(__file__).parent.parent / "themes"
 theme_map = {
-    "neon-synth": ("neon-synth", "neon_synth", theme_root / "neon-synth"),
-    "neon-wave": ("neon-wave", "neon_wave", theme_root / "neon-wave"),
-    "neon-static": ("neon-static", "neon_static", theme_root / "neon-static"),
+    "neon-synth": ("neon-synth", "neon_synth"),
+    "neon-wave": ("neon-wave", "neon_wave"),
+    "neon-static": ("neon-static", "neon_static"),
 }
-theme_paths = [path / "src" for _, _, path in theme_map.values()]
-for path in theme_paths:
-    sys.path.insert(0, str(path))
+
+def _ensure_theme_importable(theme_name: str, theme_module: str) -> None:
+    try:
+        __import__(theme_module)
+        return
+    except ModuleNotFoundError as exc:
+        if exc.name != theme_module:
+            raise
+        local_src = theme_root / theme_name / "src"
+        if local_src.exists():
+            sys.path.insert(0, str(local_src))
+            return
+        raise RuntimeError(
+            f"Theme '{theme_name}' is not installed. Install it from PyPI "
+            f"or add a local checkout at {local_src}."
+        )
 
 # project details
 project = "neonsignal"
@@ -35,14 +49,15 @@ extensions = [
 theme_key = os.environ.get("NEONBOOK_THEME", "neon-synth").strip().lower()
 theme_entry = theme_map.get(theme_key)
 if theme_entry is None:
-    for _, (theme_name, theme_module, theme_path) in theme_map.items():
+    for _, (theme_name, theme_module) in theme_map.items():
         if theme_key in {theme_name, theme_module}:
-            theme_entry = (theme_name, theme_module, theme_path)
+            theme_entry = (theme_name, theme_module)
             break
 if theme_entry is None:
     theme_entry = theme_map["neon-synth"]
 
-html_theme, theme_module, _selected_theme_path = theme_entry
+html_theme, theme_module = theme_entry
+_ensure_theme_importable(html_theme, theme_module)
 extensions.append(theme_module)
 
 def _env_flag(name: str, default: str = "on") -> bool:

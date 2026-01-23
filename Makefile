@@ -9,7 +9,11 @@ NEONBOOK_VHS ?= on
 NEONBOOK_PERF_LOG ?= off
 NEONBOOK_PERF_SOUND ?= off
 NEONBOOK_PERF_NOTIFY ?= off
-DEPLOY_DIR ?= ../neonsignal/public/_default/book
+SNI ?= _default
+DEPLOY_DIR ?= ../../public/$(SNI)/book
+PUBLIC_ENTRY ?= ../../public/$(SNI)/neonsignal-book.html
+
+OPEN_URL ?= 0.0.0.0:8080
 
 .PHONY: html open open-browser deploy
 
@@ -30,4 +34,33 @@ deploy: html
 	rm -rf $(DEPLOY_DIR)
 	mkdir -p $(DEPLOY_DIR)
 	cp -r $(BUILDDIR)/book/* $(DEPLOY_DIR)/
-	$(PYTHON) -m webbrowser "https://10.0.0.106:8888/book/index.html"
+	cat > "$PUBLIC_ENTRY" <<'EOF'
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  │ <meta charset="UTF-8" />
+  │ <meta http-equiv="refresh" content="0; url=/book/index.html" />
+  │ <meta name="viewport" content="width=device-width, initial-scale=1" />
+  │ <title>Neonsignal Book</title>
+  │ <style>
+  │ │ body {
+  │ │ │ margin: 0;
+  │ │ │ min-height: 100vh;
+  │ │ │ display: grid;
+  │ │ │ place-items: center;
+  │ │ │ background: #07070b;
+  │ │ │ color: #d9e6ff;
+  │ │ │ font-family: "Fira Code", "JetBrains Mono", "SF Mono", monospace;
+  │ │ }
+  │ │ a {
+  │ │ │ color: #6fffe9;
+  │ │ │ text-decoration: none;
+  │ │ }
+  │ </style>
+  </head>
+  <body>
+  │ <p>Loading documentation… <a href="/book/index.html">Open docs</a></p>
+  </body>
+</html>
+EOF
+	$(PYTHON) -m webbrowser "https://$(OPEN_URL)/book/index.html"
